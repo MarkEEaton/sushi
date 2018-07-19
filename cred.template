@@ -1,0 +1,7 @@
+dbs = [
+    {'name': '',
+     'wsdl_url': '',
+     'requestor_id': '',
+     'customer_reference': '',
+     'release': 0},
+      ]

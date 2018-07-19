@@ -15,12 +15,14 @@ def main():
                                                     end_date=datetime.date(2018, 6, 30),
                                                     requestor_id=item['requestor_id'],
                                                     customer_reference=item['customer_reference'],
+                                                    customer_name=item.get('loc'),
                                                     report=report_name,
                                                     release=item['release'])
                 print(outfile)
                 report.write_tsv(outfile)
-            except:
-                print(outfile + ' : report not found.')
+            except Exception as e:
+                print(outfile + ' : report not found : ' + e.__class__.__name__)
+                raise
 
 if __name__ == '__main__':
     main()
