@@ -3,5 +3,6 @@ dbs = [
      'wsdl_url': '',
      'requestor_id': '',
      'customer_reference': '',
-     'release': 0},
+     'release': 0,
+     'reports': ['', '']}
       ]
