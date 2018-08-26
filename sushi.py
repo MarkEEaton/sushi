@@ -1,7 +1,7 @@
 """ a tool to download counter reports """
 import datetime
-import cred
 import pycounter
+import cred
 
 def main():
     """ get the reports """
