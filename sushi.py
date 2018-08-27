@@ -1,8 +1,8 @@
 """ a tool to download counter reports """
 import datetime
 import logging
-import cred
 import pycounter
+import cred
 
 logging.basicConfig(level=logging.DEBUG, filename='debug.log', filemode='w')
 
