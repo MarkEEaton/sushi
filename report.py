@@ -11,8 +11,10 @@ def main():
     pathlist = Path('reports/').glob('*-JR1.tsv')
     for path in pathlist:
         with open(path, encoding='latin-1') as file1:
-            c = list(csv.reader(file1, delimiter='\t'))
-            print('{0:<33} {1:<25} {2:>6}'.format(c[8][2], 'reporting period total:', c[8][7]))
+            csv1 = list(csv.reader(file1, delimiter='\t'))
+            print('{0:<33} {1:<25} {2:>6}'.format(csv1[8][2],
+                                                  'reporting period total:',
+                                                  csv1[8][7]))
 
     print('')
     print('Database Report 1')
@@ -22,8 +24,8 @@ def main():
         searches_total = 0
         views_total = 0
         with open(path, encoding='latin-1') as file2:
-            c = list(csv.reader(file2, delimiter='\t'))
-            for line in c:
+            csv2 = list(csv.reader(file2, delimiter='\t'))
+            for line in csv2:
                 try:
                     if line[3] == 'Regular Searches':
                         searches_total += int(line[4])
@@ -31,8 +33,9 @@ def main():
                         views_total += int(line[4])
                 except IndexError:
                     pass
-            print('{0:<33} {1:>10} {2:>8}'.format(c[8][2], 'searches:', str(searches_total)))
-            print('{0:<33} {1:>10} {2:>8}'.format(c[8][2], 'views:', str(views_total)))
+            print('{0:<25} {1:>10} {2:>8}'.format(csv2[8][2], 'searches:', str(searches_total)))
+            print('{0:<25} {1:>10} {2:>8}'.format('', 'views:', str(views_total)))
+            print('')
 
     print('')
 
