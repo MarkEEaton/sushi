@@ -1,7 +1,10 @@
 """ a tool to download counter reports """
 import datetime
+import logging
 import cred
 import pycounter
+
+logging.basicConfig(level=logging.DEBUG, filename='debug.log', filemode='w')
 
 def main():
     """ get the reports """
