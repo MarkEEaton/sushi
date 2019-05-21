@@ -1,9 +1,10 @@
 """ produce a single report from all of the downloaded reports """
 
 import csv
+import argparse
 from pathlib import Path
 
-def jr1(outfile):
+def jr1(outfile, directory):
     """ make the JR1 report """
     print('')
     print('Journal Report 1')
@@ -11,7 +12,7 @@ def jr1(outfile):
     outfile.write('Journal Report 1\n')
     outfile.write('\n')
     outfile.write('Database,Reporting Period Total\n')
-    pathlist = Path('reports/').glob('*-JR1.tsv')
+    pathlist = Path(directory).glob('*-JR1.tsv')
     for path in pathlist:
         with open(path, encoding='latin-1') as file1:
             csv1 = list(csv.reader(file1, delimiter='\t'))
@@ -22,7 +23,7 @@ def jr1(outfile):
                                                   csv1[8][7]))
             outfile.write('{0},{1}\n'.format(csv1[8][2], csv1[8][7]))
 
-def db1(outfile):
+def db1(outfile, directory):
     """ make the DB1 report """
     print('')
     print('Database Report 1')
@@ -31,7 +32,7 @@ def db1(outfile):
     outfile.write('Database Report 1\n')
     outfile.write('\n')
     outfile.write(',Searches,Views\n')
-    pathlist = Path('reports/').glob('*-DB1.tsv')
+    pathlist = Path(directory).glob('*-DB1.tsv')
     for path in pathlist:
         searches_total = 0
         views_total = 0
@@ -51,7 +52,7 @@ def db1(outfile):
             print('{0:>32} {1:>10} {2:<8}'.format('', 'views:', str(views_total)))
             outfile.write('{0},{1},{2}\n'.format(csv2[8][2], str(searches_total), str(views_total)))
 
-def br2(outfile):
+def br2(outfile, directory):
     """ make the br2 report """
     print('')
     print('Book Report 2')
@@ -60,7 +61,7 @@ def br2(outfile):
     outfile.write('Book Report 2\n')
     outfile.write('\n')
     outfile.write('Database,Reporting Period Total\n')
-    pathlist = Path('reports/').glob('*-BR2.tsv')
+    pathlist = Path(directory).glob('*-BR2.tsv')
     for path in pathlist:
         with open(path, encoding='latin-1') as file3:
             csv3 = list(csv.reader(file3, delimiter='\t'))
@@ -71,10 +72,15 @@ def br2(outfile):
 
 def main():
     """ make it run """
+    parser = argparse.ArgumentParser(description='Generates a usage report')
+    parser.add_argument('directory', metavar='[directory]', type=str,
+                        help='the directory containing the reports')
+    args = parser.parse_args()
+
     with open('outfile.csv', 'w') as outfile:
-        jr1(outfile)
-        db1(outfile)
-        br2(outfile)
+        jr1(outfile, args.directory)
+        db1(outfile, args.directory)
+        br2(outfile, args.directory)
     print('')
 
 
