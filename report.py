@@ -77,7 +77,7 @@ def main():
                         help='the directory containing the reports')
     args = parser.parse_args()
 
-    with open('outfile.csv', 'w') as outfile:
+    with open(args.directory + 'summary-report.csv', 'w') as outfile:
         jr1(outfile, args.directory)
         db1(outfile, args.directory)
         br2(outfile, args.directory)
