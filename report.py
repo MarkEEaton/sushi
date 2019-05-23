@@ -65,6 +65,8 @@ def br2(outfile, directory):
     for path in pathlist:
         with open(path, encoding='latin-1') as file3:
             csv3 = list(csv.reader(file3, delimiter='\t'))
+            if csv3[8][2] == 'GOLD':
+                csv3[8][2] = 'Gale'
             print('{0:>32} {1:>25} {2:<6}'.format(csv3[8][2],
                                                   'reporting period total:',
                                                   csv3[8][7]))
