@@ -1,8 +1,12 @@
 dbs = [
-    {'name': '',
-     'wsdl_url': '',
-     'requestor_id': '',
-     'customer_reference': '',
-     'release': 0,
-     'reports': ['', '']}
+    {'name': '',                    # a unique name
+     'wsdl_url': '',                # from the vendor
+     'requestor_id': '',            # from the vendor
+     'customer_reference': '',      # from the vendor
+     'customer_name': '',           # from the vendor (uncommon)
+     'release': 0,                  # counter version number
+     'reports': ['', ''],           # this should be a list of report codes
+     'custom_start_date': None,     # this should be in the format datetime.date(2019, 4, 1)
+     'custom_end_date': None,       # this should be in the format datetime.date(2019, 4, 1)
+     }
       ]
