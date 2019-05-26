@@ -51,15 +51,11 @@ def db1(outfile, directory):
         if line[2] == "GOLD":
             line[2] = "Gale"
         print(
-            "{0:>32} {1:>10} {2:<8}".format(
-                line[2], "searches:", str(searches_total)
-            )
+            "{0:>32} {1:>10} {2:<8}".format(line[2], "searches:", str(searches_total))
         )
         print("{0:>32} {1:>10} {2:<8}".format("", "views:", str(views_total)))
         outfile.write(
-            "{0},{1},{2}\n".format(
-                line[2], str(searches_total), str(views_total)
-            )
+            "{0},{1},{2}\n".format(line[2], str(searches_total), str(views_total))
         )
 
 
