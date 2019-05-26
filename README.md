@@ -13,4 +13,4 @@ These two scripts allow for the automation of fetching and parsing COUNTER repor
 
 `report.py` summarizes information from many COUNTER reports into one `.csv` report. To use it, run:
 
-`$ python report.py /path/to/where/your/reports/live`.
+`$ python report.py /path/to/where/your/reports/live`

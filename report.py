@@ -39,29 +39,28 @@ def db1(outfile, directory):
     for path in pathlist:
         searches_total = 0
         views_total = 0
-        with open(path, encoding="latin-1") as file2:
-            csv2 = list(csv.reader(file2, delimiter="\t"))
-            if csv2[8][2] == "GOLD":
-                csv2[8][2] = "Gale"
-            for line in csv2:
-                try:
-                    if line[3] == "Regular Searches":
-                        searches_total += int(line[4])
-                    if line[3] == "Record Views":
-                        views_total += int(line[4])
-                except IndexError:
-                    pass
-            print(
-                "{0:>32} {1:>10} {2:<8}".format(
-                    csv2[8][2], "searches:", str(searches_total)
-                )
+        report = pycounter.report.parse(str(path))
+        for line in report.as_generic():
+            try:
+                if line[3] == "Regular Searches":
+                    searches_total += int(line[4])
+                if line[3] == "Record Views":
+                    views_total += int(line[4])
+            except IndexError:
+                pass
+        if line[2] == "GOLD":
+            line[2] = "Gale"
+        print(
+            "{0:>32} {1:>10} {2:<8}".format(
+                line[2], "searches:", str(searches_total)
             )
-            print("{0:>32} {1:>10} {2:<8}".format("", "views:", str(views_total)))
-            outfile.write(
-                "{0},{1},{2}\n".format(
-                    csv2[8][2], str(searches_total), str(views_total)
-                )
+        )
+        print("{0:>32} {1:>10} {2:<8}".format("", "views:", str(views_total)))
+        outfile.write(
+            "{0},{1},{2}\n".format(
+                line[2], str(searches_total), str(views_total)
             )
+        )
 
 
 def br2(outfile, directory):
@@ -75,16 +74,17 @@ def br2(outfile, directory):
     outfile.write("Database,Reporting Period Total\n")
     pathlist = Path(directory).glob("*-BR2.tsv")
     for path in pathlist:
-        with open(path, encoding="latin-1") as file3:
-            csv3 = list(csv.reader(file3, delimiter="\t"))
-            if csv3[8][2] == "GOLD":
-                csv3[8][2] = "Gale"
-            print(
-                "{0:>32} {1:>25} {2:<6}".format(
-                    csv3[8][2], "reporting period total:", csv3[8][7]
+        report = pycounter.report.parse(str(path))
+        for line in report.as_generic():
+            if line[0] == "Total for all titles":
+                if line[2] == "GOLD":
+                    line[2] = "Gale"
+                print(
+                    "{0:>32} {1:>25} {2:<6}".format(
+                        line[2], "reporting period total:", line[7]
+                    )
                 )
-            )
-            outfile.write("{0},{1}\n".format(csv3[8][2], csv3[8][7]))
+                outfile.write("{0},{1}\n".format(line[2], line[7]))
 
 
 def main():
@@ -100,8 +100,8 @@ def main():
 
     with open(args.directory + "summary-report.csv", "w") as outfile:
         jr1(outfile, args.directory)
-        # db1(outfile, args.directory)
-        # br2(outfile, args.directory)
+        db1(outfile, args.directory)
+        br2(outfile, args.directory)
     print("")
 
 
