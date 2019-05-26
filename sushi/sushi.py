@@ -40,6 +40,7 @@ def main(data, directory):
                     report=report_name,
                     sushi_dump=True,
                 )
+                breakpoint()
                 report.write_tsv(outfile)
                 print(outfile)
             except Exception as e:
