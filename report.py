@@ -1,5 +1,5 @@
 """ produce a single report from all of the downloaded reports """
-
+import pycounter
 import csv
 import argparse
 from pathlib import Path
@@ -15,16 +15,15 @@ def jr1(outfile, directory):
     outfile.write("Database,Reporting Period Total\n")
     pathlist = Path(directory).glob("*-JR1.tsv")
     for path in pathlist:
-        with open(path, encoding="latin-1") as file1:
-            csv1 = list(csv.reader(file1, delimiter="\t"))
-            if csv1[8][2] == "GOLD":
-                csv1[8][2] = "Gale"
-            print(
-                "{0:>32} {1:>25} {2:<6}".format(
-                    csv1[8][2], "reporting period total:", csv1[8][7]
+        report = pycounter.report.parse(str(path))
+        for line in report.as_generic():
+            if line[0] == "Total for all journals":
+                print(
+                    "{0:>32} {1:>25} {2:<6}".format(
+                        line[2], "reporting period total:", line[7]
+                    )
                 )
-            )
-            outfile.write("{0},{1}\n".format(csv1[8][2], csv1[8][7]))
+                outfile.write("{0},{1}\n".format(line[2], line[7]))
 
 
 def db1(outfile, directory):
@@ -101,8 +100,8 @@ def main():
 
     with open(args.directory + "summary-report.csv", "w") as outfile:
         jr1(outfile, args.directory)
-        db1(outfile, args.directory)
-        br2(outfile, args.directory)
+        # db1(outfile, args.directory)
+        # br2(outfile, args.directory)
     print("")
 
 
