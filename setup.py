@@ -1,6 +1,6 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='sushi',
-    py_modules=['sushi']
+    packages=find_packages()
 )

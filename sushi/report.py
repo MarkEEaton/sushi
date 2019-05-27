@@ -7,7 +7,7 @@ from pathlib import Path
 
 def jr1(outfile, directory):
     """ make the JR1 report """
-    return_data = {} 
+    return_data = {}
     print("")
     print("Journal Report 1")
     print("----------------------------------------")
@@ -64,6 +64,7 @@ def db1(outfile, directory):
 
 def br2(outfile, directory):
     """ make the br2 report """
+    return_data = {}
     print("")
     print("Book Report 2")
     print("-----------------------------------------")
@@ -84,6 +85,8 @@ def br2(outfile, directory):
                     )
                 )
                 outfile.write("{0},{1}\n".format(line[2], line[7]))
+                return_data[line[2]] = line[7]
+    return return_data
 
 
 def main():
