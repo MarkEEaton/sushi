@@ -15,13 +15,16 @@ def main(data, directory):
     """ get the reports """
     for item in data:
 
+        custom = ''
         # use specified dates or default dates
         if item.get("custom_start_date"):
             start_date = item["custom_start_date"]
+            custom = custom + "Custom start date. "
         else:
             start_date = default_start_date
         if item.get("custom_end_date"):
             end_date = item["custom_end_date"]
+            custom = custom + "Custom end date. "
         else:
             end_date = default_end_date
 
@@ -41,19 +44,23 @@ def main(data, directory):
                     sushi_dump=True,
                 )
                 report.write_tsv(outfile)
-                print(outfile)
+                print(outfile, custom)
             except Exception as e:
-                print(outfile + " : report not found : " + e.__class__.__name__)
+                print(outfile + " : report not found : " + e.__class__.__name__, custom)
                 pass
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generates a usage report")
+    parser = argparse.ArgumentParser(description="Fetches counter reports")
     parser.add_argument(
         "directory",
         metavar="[directory]",
         type=str,
-        help="the directory containing the reports",
+        help="the directory to put the reports in",
     )
     args = parser.parse_args()
+
+    if args.directory[-1] != "/":
+        args.directory = args.directory + "/"
+
     main(cred.dbs4, args.directory)
