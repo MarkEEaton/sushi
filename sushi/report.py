@@ -31,6 +31,7 @@ def jr1(outfile, directory):
 
 def db1(outfile, directory):
     """ make the DB1 report """
+    return_data = {}
     print("")
     print("Database Report 1")
     print("-----------------------------------------")
@@ -60,6 +61,9 @@ def db1(outfile, directory):
         outfile.write(
             "{0},{1},{2}\n".format(line[2], str(searches_total), str(views_total))
         )
+        return_data[line[2]] = {'searches': str(searches_total),
+                                'views': str(views_total)}
+    return return_data
 
 
 def br2(outfile, directory):
