@@ -15,7 +15,7 @@ def main(data, directory):
     """ get the reports """
     for item in data:
 
-        custom = ''
+        custom = '\033[93m'
         # use specified dates or default dates
         if item.get("custom_start_date"):
             start_date = item["custom_start_date"]
@@ -27,6 +27,7 @@ def main(data, directory):
             custom = custom + "Custom end date. "
         else:
             end_date = default_end_date
+        custom = custom + '\033[0m'
 
         # run the reports
         for report_name in item["reports"]:
