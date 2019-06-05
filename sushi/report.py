@@ -18,6 +18,11 @@ def jr1(outfile, directory):
     for path in pathlist:
         report = pycounter.report.parse(str(path))
         for line in report.as_generic():
+            try:
+                if line[2] == "GOLD":
+                    line[2] = "Gale"
+            except IndexError:
+                pass 
             if line[0] == "Total for all journals":
                 print(
                     "{0:>32} {1:>25} {2:<6}".format(
