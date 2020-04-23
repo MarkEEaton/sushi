@@ -12,7 +12,7 @@ default_start_date = datetime.date(2018, 5, 1)
 default_end_date = datetime.date(2019, 4, 30)
 
 
-def main(data, directory):
+def main(data, args):
     """ get the reports """
     for item in data:
 
@@ -36,7 +36,7 @@ def main(data, directory):
         # run the reports
         for report_name in item["reports"]:
             warning = ""
-            outfile = directory + item["name"] + "-" + report_name + ".tsv"
+            outfile = args.directory + item["name"] + "-" + report_name + ".tsv"
             try:
                 report = pycounter.sushi.get_report(
                     wsdl_url=item["wsdl_url"],
@@ -45,7 +45,7 @@ def main(data, directory):
                     end_date=end_date,
                     customer_reference=item["customer_reference"],
                     customer_name=item.get("customer_name"),
-                    release=item["release"],
+                    release=args.version,
                     report=report_name,
                     sushi_dump=True,
                 )
@@ -74,9 +74,20 @@ if __name__ == "__main__":
         type=str,
         help="the directory to put the reports in",
     )
+    parser.add_argument(
+        "version",
+        metavar="[version]",
+        type=int,
+        help="the sushi version you want to use",
+    )
     args = parser.parse_args()
 
     if args.directory[-1] != "/":
         args.directory = args.directory + "/"
 
-    main(cred.dbs4, args.directory)
+    if args.version == 4:
+        main(cred.dbs4, args)
+    elif args.version == 5:
+        main(cred.dbs5, args)
+    else:
+        print("Unrecognized version. Please select 4 or 5")
