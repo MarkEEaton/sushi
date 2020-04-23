@@ -70,13 +70,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fetches counter reports")
     parser.add_argument(
         "directory",
-        metavar="[directory]",
+        metavar="[output directory]",
         type=str,
         help="the directory to put the reports in",
     )
     parser.add_argument(
         "version",
-        metavar="[version]",
+        metavar="[SUSHI version]",
         type=int,
         help="the sushi version you want to use",
     )
