@@ -14,7 +14,7 @@ dbs5 = [
     {'name': '',                             # a unique name
      'wsdl_url': '',                         # from the vendor
      'auth': {'requestor_id': '',            # from the vendor
-     		  'customer_id': ''},             # from the vendor
+              'customer_id': ''},            # from the vendor
      'reports': ['', ''],                    # this should be a list of report codes
      'custom_start_date': None,              # this should be in the format datetime.date(2019, 4, 1)
      'custom_end_date': None,                # this should be in the format datetime.date(2019, 4, 1)
