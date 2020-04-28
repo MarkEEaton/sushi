@@ -1,19 +1,22 @@
 """ a tool to download counter reports """
+import requests
+import json
 import datetime
 import logging
 import pycounter
 import cred
 import argparse
+from pprint import pprint
 from dateutil.rrule import rrule, MONTHLY
 
 logging.basicConfig(level=logging.DEBUG, filename="debug.log", filemode="w")
 
-default_start_date = datetime.date(2018, 5, 1)
-default_end_date = datetime.date(2019, 4, 30)
+default_start_date = datetime.date(2019, 4, 1)
+default_end_date = datetime.date(2020, 3, 31)
 
 
-def main(data, args):
-    """ get the reports """
+def four(data, args):
+    """ get the COUNTER 4 reports """
     for item in data:
 
         custom = "\033[93m"
@@ -66,6 +69,59 @@ def main(data, args):
                 pass
 
 
+def five(data, args):
+    """ Get the COUNTER 5 reports """
+    for item in data:
+
+        custom = "\033[93m"
+        # use specified dates or default dates
+        if item.get("custom_start_date"):
+            start_date = item["custom_start_date"]
+            custom = custom + "Custom start date. "
+        else:
+            start_date = default_start_date
+
+        if item.get("custom_end_date"):
+            end_date = item["custom_end_date"]
+            custom = custom + "Custom end date."
+        else:
+            end_date = default_end_date
+
+        custom = custom + "\033[0m"
+
+        rest_str = "?"
+        for a in item["auth"]:
+            rest_str = rest_str + a + "=" + item["auth"][a] + "&"
+
+        # run the reports
+        for report_name in item["reports"]:
+            warning = ""
+            outfile = args.directory + item["name"] + "-" + report_name + ".json"
+            try:
+                headers = {
+                    "user-agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0"
+                }  # necessary for Wiley COUNTER 5 reports
+                url = (
+                    item["wsdl_url"]
+                    + report_name
+                    + rest_str
+                    + "begin_date="
+                    + start_date.strftime("%Y-%m-%d")
+                    + "&end_date="
+                    + end_date.strftime("%Y-%m-%d")
+                )
+                resp = requests.get(url, headers=headers)
+
+                j = json.loads(resp.text)
+                with open(outfile, "w") as f:
+                    json.dump(j, f)
+                print(outfile, custom, warning)
+
+            except Exception as e:
+                raise
+                print(outfile + " : report not found : " + e.__class__.__name__, custom)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fetches counter reports")
     parser.add_argument(
@@ -86,8 +142,8 @@ if __name__ == "__main__":
         args.directory = args.directory + "/"
 
     if args.version == 4:
-        main(cred.dbs4, args)
+        four(cred.dbs4, args)
     elif args.version == 5:
-        main(cred.dbs5, args)
+        five(cred.dbs5, args)
     else:
         print("Unrecognized version. Please select 4 or 5")
