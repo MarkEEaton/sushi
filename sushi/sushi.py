@@ -6,13 +6,14 @@ import logging
 import pycounter
 import cred
 import argparse
+from time import sleep
 from pprint import pprint
 from dateutil.rrule import rrule, MONTHLY
 
 logging.basicConfig(level=logging.DEBUG, filename="debug.log", filemode="w")
 
-default_start_date = datetime.date(2019, 4, 1)
-default_end_date = datetime.date(2020, 3, 31)
+default_start_date = datetime.date(2019, 7, 1)
+default_end_date = datetime.date(2020, 6, 30)
 
 
 def four(data, args):
@@ -95,6 +96,7 @@ def five(data, args):
 
         # run the reports
         for report_name in item["reports"]:
+            sleep(3)
             warning = ""
             outfile = args.directory + item["name"] + "-" + report_name + ".json"
             try:
@@ -110,6 +112,7 @@ def five(data, args):
                     + "&end_date="
                     + end_date.strftime("%Y-%m-%d")
                 )
+                print(url)
                 resp = requests.get(url, headers=headers)
 
                 j = json.loads(resp.text)
