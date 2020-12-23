@@ -1,15 +1,3 @@
-dbs4 = [
-    {'name': '',                    # a unique name
-     'wsdl_url': '',                # from the vendor
-     'requestor_id': '',            # from the vendor
-     'customer_reference': '',      # from the vendor
-     'customer_name': '',           # from the vendor (uncommon)
-     'reports': ['', ''],           # this should be a list of report codes
-     'custom_start_date': None,     # this should be in the format datetime.date(2019, 4, 1)
-     'custom_end_date': None,       # this should be in the format datetime.date(2019, 4, 1)
-     }
-      ]
-
 dbs5 = [
     {'name': '',                             # a unique name
      'wsdl_url': '',                         # from the vendor
@@ -19,4 +7,4 @@ dbs5 = [
      'custom_start_date': None,              # this should be in the format datetime.date(2019, 4, 1)
      'custom_end_date': None,                # this should be in the format datetime.date(2019, 4, 1)
      }
-      ]
+]

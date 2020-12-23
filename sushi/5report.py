@@ -7,7 +7,8 @@ def sum_it(directory):
     """ parse the tr_b1 reports """
     pathlist1 = Path(directory).glob("*tr_b1.json")
     pathlist2 = Path(directory).glob("*tr_j1.json")
-    pathlist = list(pathlist1) + list(pathlist2)
+    pathlist3 = Path(directory).glob("*dr_d*.json")
+    pathlist = list(pathlist1) + list(pathlist2) + list(pathlist3)
     for path in pathlist:
         total = 0
         with open(path, 'r') as file_name:
