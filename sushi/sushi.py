@@ -3,12 +3,9 @@ import requests
 import json
 import datetime
 import logging
-import pycounter
 import cred
 import argparse
 from time import sleep
-from pprint import pprint
-from dateutil.rrule import rrule, MONTHLY
 
 logging.basicConfig(level=logging.DEBUG, filename="debug.log", filemode="w")
 
