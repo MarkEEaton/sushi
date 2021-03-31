@@ -4,7 +4,7 @@ Click==7.0
 et-xmlfile==1.0.1
 idna==2.8
 jdcal==1.4.1
-lxml==4.6.2
+lxml==4.6.3
 openpyxl==2.6.2
 pendulum==2.0.4
 pycounter==1.1.1
